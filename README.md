@@ -600,3 +600,4 @@ Built with Angular 19 and Material Design 3.
 
 **Version:** 1.0.0
 **Last Updated:** February 2026
+# hybel-qpp
