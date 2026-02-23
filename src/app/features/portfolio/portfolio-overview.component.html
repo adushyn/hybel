@@ -1,0 +1,49 @@
+<div class="portfolio-overview">
+  @if (vm().loading.isLoading) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>{{ vm().loading.loadingMessage || 'Loading portfolio data...' }}</p>
+    </div>
+  } @else {
+    <div class="content">
+      <div class="header">
+        <div>
+          <h1>Properties</h1>
+          <p class="subtitle">Manage and filter your rental properties</p>
+        </div>
+        <button mat-raised-button color="primary" (click)="navigateToDashboard()">
+          <mat-icon>dashboard</mat-icon>
+          View Dashboard
+        </button>
+      </div>
+
+      <app-portfolio-filters
+        [filters]="{
+          searchTerm: vm().filters.searchTerm,
+          status: vm().filters.status,
+          type: vm().filters.type,
+          city: vm().filters.city,
+          hasOverduePayment: vm().filters.hasOverduePayment,
+          leaseExpiringSoon: vm().filters.leaseExpiringSoon,
+          needsAttention: vm().filters.needsAttention
+        }"
+        [availableCities]="vm().availableCities"
+        [overduePaymentCount]="vm().overduePaymentCount"
+        [expiringSoonCount]="vm().expiringSoonCount"
+        [needsAttentionCount]="vm().needsAttentionCount"
+        (filtersChange)="handleFiltersChange($event)">
+      </app-portfolio-filters>
+
+      <app-property-table
+        [properties]="vm().filteredProperties"
+        (rowClick)="handleViewDetails($event)">
+      </app-property-table>
+    </div>
+  }
+
+  @if (vm().error.hasError) {
+    <div class="error-message">
+      <strong>Error:</strong> {{ vm().error.errorMessage }}
+    </div>
+  }
+</div>

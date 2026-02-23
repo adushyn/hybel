@@ -1,0 +1,39 @@
+<div class="snack-container">
+  <div class="snack-info-container">
+    @if (getIcon(type)) {
+      <mat-icon class="snack-icon" aria-hidden="true">{{ getIcon(type) }}</mat-icon>
+    }
+    <p class="message">{{ message }}</p>
+  </div>
+
+  <div class="action-buttons-container">
+    @if (type !== 'NEUTRAL') {
+      <button
+        mat-icon-button
+        [disabled]="!showProgress"
+        [class.pinned]="isPinned"
+        aria-label="Pin notification"
+        (click)="pin()">
+        <mat-icon aria-hidden="true">{{ isPinned ? 'push_pin' : 'push_pin' }}</mat-icon>
+      </button>
+      <div class="line"></div>
+    }
+
+    <button
+      mat-icon-button
+      aria-label="Close"
+      (click)="close()">
+      <mat-icon aria-hidden="true">close</mat-icon>
+    </button>
+  </div>
+</div>
+
+@if (showProgress) {
+  <div class="progress-spinner">
+    <mat-progress-bar
+      class="snack-bar-progress-bar"
+      mode="determinate"
+      [value]="progressValue">
+    </mat-progress-bar>
+  </div>
+}

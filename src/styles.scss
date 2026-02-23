@@ -1,0 +1,303 @@
+/* Hybel Property Management - Custom Angular Material Theme */
+/* These tokens are generated using https://themes.angular-material.dev/ */
+/* Preview: https://themes.angular-material.dev/?bold-font-weight=700&brand-font-family=Roboto&medium-font-weight=500&plain-font-family=Roboto&regular-font-weight=400&seed-error=%23ba1a1a&seed-neutral=%23787870&seed-neutral-variant=%23767869&seed-primary=%234b5d17&seed-secondary=%235a6241&seed-tertiary=%23266b43 */
+/* Seed Colors: primary: #4b5d17, secondary: #5a6241, tertiary: #266b43, error: #ba1a1a, neutral: #787870, neutral-variant: #767869 */
+/* Seed Typography: plain-font-family: Roboto, brand-font-family: Roboto, bold-font-weight: 700, medium-font-weight: 500, regular-font-weight: 400 */
+
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Define custom green palette for Hybel brand
+$hybel-primary: mat.m2-define-palette((
+  50: #e9f3d7,
+  100: #d5ec96,
+  200: #c3db7f,
+  300: #b9cf7c,
+  400: #9ec147,
+  500: #53651f,  // Main brand color
+  600: #4b5d1c,
+  700: #3c4d06,
+  800: #283500,
+  900: #161f00,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+));
+
+$hybel-accent: mat.m2-define-palette((
+  50: #e0f2f1,
+  100: #abf3c0,
+  200: #90d6a5,
+  300: #4db6ac,
+  400: #26a69a,
+  500: #266b43,  // Tertiary color
+  600: #02522d,
+  700: #00391d,
+  800: #00210f,
+  900: #004d40,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+));
+
+$hybel-warn: mat.m2-define-palette((
+  50: #ffedea,
+  100: #ffdad6,
+  200: #ffb4ab,
+  300: #ff897d,
+  400: #ff5449,
+  500: #ba1a1a,
+  600: #93000a,
+  700: #690005,
+  800: #410002,
+  900: #410002,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+));
+
+// Create the light theme
+$hybel-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $hybel-primary,
+    accent: $hybel-accent,
+    warn: $hybel-warn,
+  )
+));
+
+// Apply the theme to all Material components
+@include mat.all-component-themes($hybel-theme);
+
+/* Additional Theme Token Overrides */
+:root, :host {
+  @include mat.theme-overrides((
+    primary: #53651f,
+    on-primary: #ffffff,
+    primary-container: #d5ec96,
+    on-primary-container: #161f00,
+    inverse-primary: #b9cf7c,
+    primary-fixed: #d5ec96,
+    primary-fixed-dim: #b9cf7c,
+    on-primary-fixed: #161f00,
+    on-primary-fixed-variant: #3c4d06,
+    secondary: #5a6241,
+    on-secondary: #ffffff,
+    secondary-container: #dee7bd,
+    on-secondary-container: #171e05,
+    secondary-fixed: #dee7bd,
+    secondary-fixed-dim: #c2cba2,
+    on-secondary-fixed: #171e05,
+    on-secondary-fixed-variant: #424a2b,
+    tertiary: #266b43,
+    on-tertiary: #ffffff,
+    tertiary-container: #abf3c0,
+    on-tertiary-container: #00210f,
+    tertiary-fixed: #abf3c0,
+    tertiary-fixed-dim: #90d6a5,
+    on-tertiary-fixed: #00210f,
+    on-tertiary-fixed-variant: #02522d,
+    background: #fcf8f7,
+    on-background: #1c1b1b,
+    surface: #fcf8f7,
+    surface-dim: #ddd9d8,
+    surface-bright: #fcf8f7,
+    surface-container-lowest: #ffffff,
+    surface-container-low: #f7f3f1,
+    surface-container: #f1edeb,
+    surface-container-high: #ebe7e6,
+    surface-container-highest: #e5e2e0,
+    on-surface: #1c1b1b,
+    shadow: #000000,
+    scrim: #000000,
+    surface-tint: #5f5f57,
+    inverse-surface: #31302f,
+    inverse-on-surface: #f4f0ee,
+    outline: #787770,
+    outline-variant: #c8c7bd,
+    neutral: #797776,
+    neutral10: #1c1b1b,
+    error: #ba1a1a,
+    error-container: #ffdad6,
+    on-error: #ffffff,
+    on-error-container: #410002,
+    surface-variant: #e4e3d9,
+    on-surface-variant: #474740,
+    neutral-variant: #78786f,
+    neutral-variant20: #30312a,
+    inverse-secondary: #c2cba2,
+    inverse-tertiary: #90d6a5,
+    brand-family: Roboto,
+    plain-family: Roboto,
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400,
+  ));
+}
+
+/* Dark Theme */
+.dark {
+  @include mat.theme-overrides((
+    primary: #b9cf7c,
+    on-primary: #283500,
+    primary-container: #3c4d06,
+    on-primary-container: #d5ec96,
+    inverse-primary: #53651f,
+    primary-fixed: #d5ec96,
+    primary-fixed-dim: #b9cf7c,
+    on-primary-fixed: #161f00,
+    on-primary-fixed-variant: #3c4d06,
+    secondary: #c2cba2,
+    on-secondary: #2c3317,
+    secondary-container: #424a2b,
+    on-secondary-container: #dee7bd,
+    secondary-fixed: #dee7bd,
+    secondary-fixed-dim: #c2cba2,
+    on-secondary-fixed: #171e05,
+    on-secondary-fixed-variant: #424a2b,
+    tertiary: #90d6a5,
+    on-tertiary: #00391d,
+    tertiary-container: #02522d,
+    on-tertiary-container: #abf3c0,
+    tertiary-fixed: #abf3c0,
+    tertiary-fixed-dim: #90d6a5,
+    on-tertiary-fixed: #00210f,
+    on-tertiary-fixed-variant: #02522d,
+    background: #141313,
+    on-background: #e5e2e0,
+    surface: #141313,
+    surface-dim: #141313,
+    surface-bright: #3a3938,
+    surface-container-lowest: #0e0e0d,
+    surface-container-low: #1c1b1b,
+    surface-container: #201f1f,
+    surface-container-high: #2b2a29,
+    surface-container-highest: #353534,
+    on-surface: #e5e2e0,
+    shadow: #000000,
+    scrim: #000000,
+    surface-tint: #c8c7bd,
+    inverse-surface: #e5e2e0,
+    inverse-on-surface: #31302f,
+    outline: #919189,
+    outline-variant: #474740,
+    neutral: #797776,
+    neutral10: #1c1b1b,
+    error: #ffb4ab,
+    error-container: #93000a,
+    on-error: #690005,
+    on-error-container: #ffdad6,
+    surface-variant: #474740,
+    on-surface-variant: #c8c7bd,
+    neutral-variant: #78786f,
+    neutral-variant20: #30312a,
+    inverse-secondary: #5a6241,
+    inverse-tertiary: #266b43,
+  ));
+}
+
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px; /* Base font size */
+  background-color: #fdfcf5;
+  color: #1b1b19;
+  line-height: 1.5;
+}
+
+/* Typography Scale - Consistent sizing across the app */
+/* Using rem units for scalability */
+h1, .text-4xl { font-size: 2rem; font-weight: 700; line-height: 1.2; }      /* 32px */
+h2, .text-3xl { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }    /* 24px */
+h3, .text-2xl { font-size: 1.25rem; font-weight: 600; line-height: 1.4; }   /* 20px */
+h4, .text-xl  { font-size: 1.125rem; font-weight: 600; line-height: 1.4; }  /* 18px */
+h5, .text-lg  { font-size: 1rem; font-weight: 600; line-height: 1.5; }      /* 16px */
+.text-base    { font-size: 1rem; font-weight: 400; line-height: 1.5; }      /* 16px */
+.text-sm      { font-size: 0.875rem; font-weight: 400; line-height: 1.5; }  /* 14px */
+.text-xs      { font-size: 0.75rem; font-weight: 400; line-height: 1.5; }   /* 12px */
+
+/* Custom utility classes for Hybel theme */
+.mat-mdc-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Enhance attention/warning colors for landlord dashboard */
+.attention-indicator {
+  color: #ba1a1a;
+}
+
+.success-indicator {
+  color: #266b43;
+}
+
+.warning-indicator {
+  color: #ff9800;
+}
+
+/* Status chip colors - matching property status */
+.status-available {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.status-rented {
+  background-color: #2196f3 !important;
+  color: white !important;
+}
+
+.status-reserved {
+  background-color: #ff9800 !important;
+  color: white !important;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f0e9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8e9088;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #74776f;
+}
+
+/* Material 3 Component Overrides - Theme tokens are automatically applied */
+/* Additional custom styling for specific components if needed */

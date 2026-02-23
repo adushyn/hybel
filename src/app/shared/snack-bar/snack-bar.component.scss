@@ -1,0 +1,137 @@
+.snack-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  min-width: 320px;
+  max-width: 500px;
+  gap: 1rem;
+}
+
+.snack-info-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+
+  .snack-icon {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .message {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+}
+
+.action-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+
+  .line {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  button {
+    color: inherit;
+
+    &.pinned {
+      mat-icon {
+        transform: rotate(45deg);
+      }
+    }
+
+    mat-icon {
+      transition: transform 0.2s ease;
+    }
+
+    &:hover mat-icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.progress-spinner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+
+  .snack-bar-progress-bar {
+    height: 4px;
+  }
+}
+
+/* Type-specific styles - applied by the service */
+:host-context(.snack-success) {
+  .snack-container {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .snack-bar-progress-bar ::ng-deep .mat-mdc-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+:host-context(.snack-error) {
+  .snack-container {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .snack-bar-progress-bar ::ng-deep .mat-mdc-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+:host-context(.snack-warning) {
+  .snack-container {
+    background-color: #ff9800;
+    color: white;
+  }
+
+  .snack-bar-progress-bar ::ng-deep .mat-mdc-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+:host-context(.snack-info) {
+  .snack-container {
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .snack-bar-progress-bar ::ng-deep .mat-mdc-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+:host-context(.snack-neutral) {
+  .snack-container {
+    background-color: #424242;
+    color: white;
+  }
+
+  .snack-bar-progress-bar ::ng-deep .mat-mdc-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .snack-container {
+    min-width: 280px;
+    max-width: 100%;
+  }
+}

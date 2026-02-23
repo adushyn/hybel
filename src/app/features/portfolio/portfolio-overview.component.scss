@@ -1,0 +1,67 @@
+.portfolio-overview {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  button {
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+h1 {
+  margin: 0 0 0.5rem 0;
+  color: #53651f;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  gap: 1rem;
+
+  p {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.error-message {
+  background-color: #f44336;
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

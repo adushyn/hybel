@@ -1,0 +1,148 @@
+.combined-summary-card {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-header {
+    margin-bottom: 1rem;
+  }
+
+  mat-card-title {
+    color: #53651f;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+  }
+
+  mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .income-icon {
+    color: #266b43;
+  }
+
+  &.payment-item {
+    mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &.paid {
+      background: rgba(76, 175, 80, 0.08);
+
+      mat-icon {
+        color: #4caf50;
+      }
+
+      .summary-value {
+        color: #4caf50;
+      }
+    }
+
+    &.pending {
+      background: rgba(255, 152, 0, 0.08);
+
+      mat-icon {
+        color: #ff9800;
+      }
+
+      .summary-value {
+        color: #ff9800;
+      }
+    }
+
+    &.overdue {
+      background: rgba(244, 67, 54, 0.08);
+
+      mat-icon {
+        color: #f44336;
+      }
+
+      .summary-value {
+        color: #f44336;
+      }
+    }
+  }
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #53651f;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-count {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-item {
+    mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &.payment-item mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .summary-value {
+    font-size: 1.25rem;
+  }
+}

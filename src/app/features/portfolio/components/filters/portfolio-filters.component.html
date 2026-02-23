@@ -1,0 +1,88 @@
+<mat-card class="filters-card">
+  <mat-card-header>
+    <mat-card-title>Filter Properties</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="filters-container">
+      <!-- Search Field -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Search</mat-label>
+        <input matInput
+               placeholder="Address, city, or tenant..."
+               [value]="filters.searchTerm"
+               (input)="onSearchChange($any($event.target).value)">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Status Dropdown -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Status</mat-label>
+        <mat-select
+          [value]="filters.status"
+          (selectionChange)="onStatusChange($event.value)">
+          <mat-option [value]="null">All Statuses</mat-option>
+          <mat-option value="available">Available</mat-option>
+          <mat-option value="rented">Rented</mat-option>
+          <mat-option value="reserved">Reserved</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Type Dropdown -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Type</mat-label>
+        <mat-select
+          [value]="filters.type"
+          (selectionChange)="onTypeChange($event.value)">
+          <mat-option [value]="null">All Types</mat-option>
+          <mat-option value="flat">Flat</mat-option>
+          <mat-option value="house">House</mat-option>
+          <mat-option value="studio">Studio</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- City Dropdown -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>City</mat-label>
+        <mat-select
+          [value]="filters.city"
+          (selectionChange)="onCityChange($event.value)">
+          <mat-option [value]="null">All Cities</mat-option>
+          @for (city of availableCities; track city) {
+            <mat-option [value]="city">{{ city }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="toggle-group">
+        <mat-slide-toggle
+          [checked]="filters.hasOverduePayment"
+          [matBadge]="overduePaymentCount"
+          [matBadgeHidden]="overduePaymentCount === 0"
+          matBadgeColor="warn"
+          (change)="onOverdueChange($event.checked)">
+          Overdue Payments Only
+        </mat-slide-toggle>
+
+        <mat-slide-toggle
+          [checked]="filters.leaseExpiringSoon"
+          [matBadge]="expiringSoonCount"
+          [matBadgeHidden]="expiringSoonCount === 0"
+          matBadgeColor="accent"
+          (change)="onExpiringSoonChange($event.checked)">
+          Leases Expiring Soon
+        </mat-slide-toggle>
+
+        <mat-slide-toggle
+          [checked]="filters.needsAttention"
+          [matBadge]="needsAttentionCount"
+          [matBadgeHidden]="needsAttentionCount === 0"
+          matBadgeColor="warn"
+          (change)="onNeedsAttentionChange($event.checked)">
+          Needs Attention
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,136 @@
+<div class="detail-container">
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    @if (property(); as prop) {
+      <mat-card>
+        <mat-card-header>
+          <button mat-icon-button routerLink="/portfolio/properties" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div class="header-content">
+            <mat-card-title>{{ prop.address }}</mat-card-title>
+            <mat-card-subtitle>{{ prop.city }}, {{ prop.postalCode }}</mat-card-subtitle>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="info-section">
+            <h3>Property Details</h3>
+            <div class="details-grid">
+              <div class="detail-item">
+                <span class="label">Type:</span>
+                <mat-chip>{{ prop.type | titlecase }}</mat-chip>
+              </div>
+              <div class="detail-item">
+                <span class="label">Status:</span>
+                <mat-chip [class]="'status-' + prop.status">
+                  {{ prop.status | titlecase }}
+                </mat-chip>
+              </div>
+              <div class="detail-item">
+                <span class="label">Monthly Rent:</span>
+                <span class="rent">{{ prop.monthlyRent | number }} {{ prop.currency }}</span>
+              </div>
+            </div>
+          </div>
+
+          @if (prop.tenant) {
+            <div class="info-section">
+              <h3>Current Tenant</h3>
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Name:</span>
+                  <span>{{ prop.tenant.name }}</span>
+                </div>
+                @if (prop.tenant.email) {
+                  <div class="detail-item">
+                    <span class="label">Email:</span>
+                    <span>{{ prop.tenant.email }}</span>
+                  </div>
+                }
+                @if (prop.tenant.phone) {
+                  <div class="detail-item">
+                    <span class="label">Phone:</span>
+                    <span>{{ prop.tenant.phone }}</span>
+                  </div>
+                }
+                @if (prop.leaseExpires) {
+                  <div class="detail-item">
+                    <span class="label">Lease Expires:</span>
+                    <span>{{ prop.leaseExpires | date: 'dd.MM.yyyy' }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          } @else {
+            <div class="info-section">
+              <h3>Tenant Status</h3>
+              <p>No current tenant - property is {{ prop.status }}</p>
+            </div>
+          }
+
+          @if (prop.images && prop.images.length > 0) {
+            <div class="info-section">
+              <h3>Property Images</h3>
+              <div class="carousel-container">
+                <div class="carousel">
+                  <button mat-icon-button class="carousel-button prev" (click)="previousImage()">
+                    <mat-icon>chevron_left</mat-icon>
+                  </button>
+
+                  <div class="carousel-image-container" (click)="openImageDialog(prop.images[currentImageIndex()])">
+                    <img [src]="prop.images[currentImageIndex()]" [alt]="prop.address" />
+                    <div class="image-overlay">
+                      <mat-icon>zoom_in</mat-icon>
+                      <span class="image-counter">{{ currentImageIndex() + 1 }} / {{ prop.images.length }}</span>
+                    </div>
+                  </div>
+
+                  <button mat-icon-button class="carousel-button next" (click)="nextImage()">
+                    <mat-icon>chevron_right</mat-icon>
+                  </button>
+                </div>
+
+                <div class="carousel-indicators">
+                  @for (image of prop.images; track $index; let i = $index) {
+                    <button
+                      class="indicator-dot"
+                      [class.active]="i === currentImageIndex()"
+                      (click)="goToImage(i)">
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else {
+            <div class="info-section">
+              <h3>Property Images</h3>
+              <div class="no-images-message">
+                <mat-icon>image_not_supported</mat-icon>
+                <p>No images available for this property</p>
+              </div>
+            </div>
+          }
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="editProperty()">
+            <mat-icon>edit</mat-icon>
+            Edit Property
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    } @else {
+      <div class="not-found">
+        <mat-icon>error_outline</mat-icon>
+        <h2>Property not found</h2>
+        <button mat-raised-button color="primary" routerLink="/portfolio">
+          Back to Portfolio
+        </button>
+      </div>
+    }
+  }
+</div>

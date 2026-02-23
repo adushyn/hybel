@@ -1,0 +1,66 @@
+<mat-card class="combined-summary-card">
+  <mat-card-header>
+    <mat-card-title>Portfolio Overview</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="summary-grid">
+      <!-- Total Properties -->
+      <div class="summary-item">
+        <mat-icon color="primary">home</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ metrics.totalProperties }}</span>
+          <span class="summary-label">Total Properties</span>
+        </div>
+      </div>
+
+      <!-- Occupancy Rate -->
+      <div class="summary-item">
+        <mat-icon color="accent">apartment</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ metrics.occupancyRate }}%</span>
+          <span class="summary-label">Occupancy Rate</span>
+        </div>
+      </div>
+
+      <!-- Monthly Income -->
+      <div class="summary-item">
+        <mat-icon class="income-icon">payments</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ metrics.monthlyIncome | currency:'NOK':'symbol':'1.0-0':'nb-NO' }}</span>
+          <span class="summary-label">Monthly Income</span>
+        </div>
+      </div>
+
+      <!-- Paid Payments -->
+      <div class="summary-item payment-item paid">
+        <mat-icon>check_circle</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ paymentSummary.totalPaid | currency:'NOK':'symbol':'1.0-0' }}</span>
+          <span class="summary-label">Paid</span>
+          <span class="summary-count">{{ paymentSummary.paidCount }} payment{{ paymentSummary.paidCount !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+
+      <!-- Pending Payments -->
+      <div class="summary-item payment-item pending">
+        <mat-icon>schedule</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ paymentSummary.totalPending | currency:'NOK':'symbol':'1.0-0' }}</span>
+          <span class="summary-label">Pending</span>
+          <span class="summary-count">{{ paymentSummary.pendingCount }} payment{{ paymentSummary.pendingCount !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+
+      <!-- Overdue Payments -->
+      <div class="summary-item payment-item overdue">
+        <mat-icon>error</mat-icon>
+        <div class="summary-details">
+          <span class="summary-value">{{ paymentSummary.totalOverdue | currency:'NOK':'symbol':'1.0-0' }}</span>
+          <span class="summary-label">Overdue</span>
+          <span class="summary-count">{{ paymentSummary.overdueCount }} payment{{ paymentSummary.overdueCount !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

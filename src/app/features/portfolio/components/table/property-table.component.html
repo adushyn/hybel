@@ -1,0 +1,222 @@
+<!-- View Mode Toggle -->
+<div class="view-toggle-container">
+  <mat-button-toggle-group [value]="viewMode()" (change)="setViewMode($event.value)" aria-label="View mode">
+    <mat-button-toggle value="table" matTooltip="Table View">
+      <mat-icon>view_list</mat-icon>
+      <span class="toggle-label">Table</span>
+    </mat-button-toggle>
+    <mat-button-toggle value="card" matTooltip="Card View">
+      <mat-icon>view_module</mat-icon>
+      <span class="toggle-label">Cards</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<!-- Table View -->
+@if (viewMode() === 'table') {
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" [trackBy]="trackByPropertyId" matSort class="property-table clickable-rows">
+
+    <!-- Address Column -->
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+      <td mat-cell *matCellDef="let property">
+        <div class="address-cell">
+          <strong>{{ property.address }}</strong>
+          <span class="city">{{ property.city }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Status Column with mat-chip -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let property">
+        <mat-chip [class]="'status-chip status-' + property.status">
+          {{ property.status | titlecase }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <!-- Tenant Column -->
+    <ng-container matColumnDef="tenant">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tenant</th>
+      <td mat-cell *matCellDef="let property">
+        @if (property.tenant) {
+          <span>{{ property.tenant.name }}</span>
+        } @else {
+          <span class="no-tenant">—</span>
+        }
+      </td>
+    </ng-container>
+
+    <!-- Rent Column (NOK Currency) -->
+    <ng-container matColumnDef="rent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rent</th>
+      <td mat-cell *matCellDef="let property">
+        <span class="rent-amount">
+          {{ property.monthlyRent | currency:'NOK':'symbol':'1.0-0':'nb-NO' }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Lease Expiry Column -->
+    <ng-container matColumnDef="leaseExpiry">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lease Expiry</th>
+      <td mat-cell *matCellDef="let property">
+        @if (property.leaseExpires) {
+          <div class="lease-cell">
+            <span>{{ property.leaseExpires | date:'dd.MM.yyyy' }}</span>
+            @if (property.daysUntilLeaseExpiry !== null && property.daysUntilLeaseExpiry <= 60) {
+              <span class="expiring-soon">
+                ({{ property.daysUntilLeaseExpiry }} days)
+              </span>
+            }
+          </div>
+        } @else {
+          <span class="no-lease">—</span>
+        }
+      </td>
+    </ng-container>
+
+    <!-- Payment Status Column with mat-chip -->
+    <ng-container matColumnDef="paymentStatus">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment</th>
+      <td mat-cell *matCellDef="let property">
+        @if (property.hasOverduePayment) {
+          <mat-chip class="payment-chip payment-overdue">
+            <mat-icon>error</mat-icon>
+            Overdue
+          </mat-chip>
+        } @else if (property.tenant) {
+          <mat-chip class="payment-chip payment-current">
+            <mat-icon>check_circle</mat-icon>
+            Current
+          </mat-chip>
+        } @else {
+          <span class="no-payment">—</span>
+        }
+      </td>
+    </ng-container>
+
+      <!-- Table Header and Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;"
+        [class.attention-row]="row.needsAttention"
+        (click)="onRowClick(row)"
+        tabindex="0"
+        (keydown.enter)="onRowClick(row)"
+        (keydown.space)="onRowClick(row)">
+      </tr>
+    </table>
+  </div>
+}
+
+<!-- Card View -->
+@if (viewMode() === 'card') {
+  <div class="cards-grid">
+    @for (property of dataSource.data; track trackByPropertyId($index, property)) {
+      <mat-card class="property-card" [class.attention-card]="property.needsAttention" (click)="onCardClick(property)">
+        <mat-card-header>
+          <mat-card-title>
+            <div class="card-title-row">
+              <span class="property-address">{{ property.address }}</span>
+              <mat-chip [class]="'status-chip status-' + property.status">
+                {{ property.status | titlecase }}
+              </mat-chip>
+            </div>
+          </mat-card-title>
+          <mat-card-subtitle>{{ property.city }} • {{ property.postalCode }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="card-details">
+            <!-- Property Type -->
+            <div class="detail-row">
+              <mat-icon class="detail-icon">home</mat-icon>
+              <span class="detail-label">Type:</span>
+              <span class="detail-value">{{ property.type | titlecase }}</span>
+            </div>
+
+            <!-- Rent -->
+            <div class="detail-row">
+              <mat-icon class="detail-icon">payments</mat-icon>
+              <span class="detail-label">Rent:</span>
+              <span class="detail-value rent-amount">
+                {{ property.monthlyRent | currency:'NOK':'symbol':'1.0-0':'nb-NO' }}
+              </span>
+            </div>
+
+            <!-- Tenant -->
+            <div class="detail-row">
+              <mat-icon class="detail-icon">person</mat-icon>
+              <span class="detail-label">Tenant:</span>
+              @if (property.tenant) {
+                <span class="detail-value">{{ property.tenant.name }}</span>
+              } @else {
+                <span class="detail-value no-tenant">No tenant</span>
+              }
+            </div>
+
+            <!-- Lease Expiry -->
+            <div class="detail-row">
+              <mat-icon class="detail-icon">event</mat-icon>
+              <span class="detail-label">Lease Expiry:</span>
+              @if (property.leaseExpires) {
+                <div class="detail-value">
+                  <span>{{ property.leaseExpires | date:'dd.MM.yyyy' }}</span>
+                  @if (property.daysUntilLeaseExpiry !== null && property.daysUntilLeaseExpiry <= 60) {
+                    <span class="expiring-soon-badge">
+                      {{ property.daysUntilLeaseExpiry }} days
+                    </span>
+                  }
+                </div>
+              } @else {
+                <span class="detail-value no-lease">—</span>
+              }
+            </div>
+
+            <!-- Payment Status -->
+            <div class="detail-row">
+              <mat-icon class="detail-icon">receipt</mat-icon>
+              <span class="detail-label">Payment:</span>
+              @if (property.hasOverduePayment) {
+                <mat-chip class="payment-chip payment-overdue">
+                  <mat-icon>error</mat-icon>
+                  Overdue
+                </mat-chip>
+              } @else if (property.tenant) {
+                <mat-chip class="payment-chip payment-current">
+                  <mat-icon>check_circle</mat-icon>
+                  Current
+                </mat-chip>
+              } @else {
+                <span class="detail-value no-payment">—</span>
+              }
+            </div>
+          </div>
+        </mat-card-content>
+
+        @if (property.needsAttention) {
+          <mat-card-footer>
+            <div class="attention-banner">
+              <mat-icon>warning</mat-icon>
+              <span>Needs Attention</span>
+            </div>
+          </mat-card-footer>
+        }
+      </mat-card>
+    }
+  </div>
+}
+
+<!-- Empty State -->
+@if (dataSource.data.length === 0) {
+  <div class="empty-state">
+    <mat-icon>inbox</mat-icon>
+    <h3>No properties found</h3>
+    <p>Try adjusting your filters to see more results.</p>
+  </div>
+}

@@ -1,0 +1,5 @@
+# Netlify Redirects - Backup for SPA routing
+# This file will be copied to dist during build
+
+# Redirect all routes to index.html for Angular routing
+/*    /index.html   200
